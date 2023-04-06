@@ -32,27 +32,27 @@ t2.wagons_each { |wagon, id| p "wagon:#{wagon.class.name} ID #{id}" }
 p "Wagons train: #{t3.number}"
 t3.wagons_each { |wagon, id| p "wagon:#{wagon.class.name} ID #{id}" }
 p '_________________________________'
-pw1.loaded_wagon(1)
-pw1.loaded_wagon(1)
-pw1.loaded_wagon(1)
-p "Wagon #{pw1} places_count: #{pw1.places_count} occupied places: #{pw1.occupied_places} free places: #{pw1.free_places}"
-pw2.loaded_wagon(1)
-pw2.loaded_wagon(1)
-pw3.loaded_wagon(1)
-pw4.loaded_wagon(1)
-pw5.loaded_wagon(1)
-pw5.loaded_wagon(1)
-pw5.loaded_wagon(1)
-pw5.loaded_wagon(1)
-pw5.loaded_wagon(1)
+pw1.loaded_wagon
+pw1.loaded_wagon
+pw1.loaded_wagon
+p "Wagon #{pw1} places_count: #{pw1.capacity} occupied places: #{pw1.occupied_places} free places: #{pw1.free_places}"
+pw2.loaded_wagon
+pw2.loaded_wagon
+pw3.loaded_wagon
+pw4.loaded_wagon
+pw5.loaded_wagon(11)
+pw5.loaded_wagon(4)
+pw5.loaded_wagon(14)
+pw5.loaded_wagon(5)
+pw5.loaded_wagon(3)
+pw6.loaded_wagon(12)
 pw6.loaded_wagon(1)
-pw6.loaded_wagon(1)
-pw6.loaded_wagon(1)
-pw6.loaded_wagon(1)
-pw6.loaded_wagon(1)
-pw6.loaded_wagon(1)
-pw6.loaded_wagon(1)
-p "Wagon #{pw6} wagon_volume: #{pw6.wagon_volume} occupied volume: #{pw6.occupied_volume} free volume: #{pw6.free_volume}"
+pw6.loaded_wagon(24)
+pw6.loaded_wagon(2)
+pw6.loaded_wagon(8)
+pw6.loaded_wagon(32)
+pw6.loaded_wagon(7)
+p "Wagon #{pw6} wagon_volume: #{pw6.capacity} occupied volume: #{pw6.occupied_places} free volume: #{pw6.free_places}"
 st1 = Station.new('PEACE')
 st2 = Station.new('NOWAR')
 st3 = Station.new('CHOMP')

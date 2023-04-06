@@ -177,12 +177,12 @@ class Main
       p 'Places count?'
       places_count = gets.chomp.to_i
       @wagon_list << PassengerWagon.new(places_count)
-      p "New wagon: #{@wagon_list.last.class.name} with places count:#{@wagon_list.last.places_count} was created"
+      p "New wagon: #{@wagon_list.last.class.name} with places count:#{@wagon_list.last.capacity} was created"
     when 2
       p 'Wagon volume?'
       wagon_volume = gets.chomp.to_i
       @wagon_list << CargoWagon.new(wagon_volume)
-      p "New wagon: #{@wagon_list.last.class.name} with wagon volume:#{@wagon_list.last.wagon_volume} was created"
+      p "New wagon: #{@wagon_list.last.class.name} with wagon volume:#{@wagon_list.last.capacity} was created"
     else
       p 'Input: 1 - Passenger, 2 - Cargo or stop to exit'
     end
