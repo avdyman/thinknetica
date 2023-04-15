@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require 'pry'
-
+# This is module Instances
 module InstanceCounter
   def self.included(base)
     base.extend ClassMethods
     base.send :include, InstanceMethods
   end
 
+  # This is module ClassMethods
   module ClassMethods
     def count_instances
       @instances
@@ -21,6 +22,7 @@ module InstanceCounter
     end
   end
 
+  # This is module InstancesMethods
   module InstanceMethods
     private
 

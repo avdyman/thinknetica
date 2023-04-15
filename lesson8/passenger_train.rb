@@ -3,8 +3,9 @@
 require_relative 'train'
 # require_relative 'station'
 require_relative 'manufacturer'
-
-class CargoTrain < Train
+require 'pry'
+# This is subclass
+class PassengerTrain < Train
   include Manufacturer
   include InstanceCounter
   attr_reader :number
@@ -26,7 +27,7 @@ class CargoTrain < Train
   private
 
   def validate!
-    raise 'Train number empty' if number.nil? || number.length.to_i.zero?
-    raise 'Uncorrect format of train number' if number !~ TRAIN_NUMBER
+    raise ArgumentError, 'Train number empty' if number.nil? || number.length.to_i.zero?
+    raise ArgumentError, 'Uncorrect format number' if number !~ TRAIN_NUMBER
   end
 end
