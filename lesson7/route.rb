@@ -42,7 +42,3 @@ class Route
     raise ArgumentError, 'Route name empty' if name.nil?
   end
 end
-
-# p rt1 = Route.new("fargo5", 1, 3)
-# p rt1.valid?
-# p rt2 = Route.new("fargo", 0, 4)

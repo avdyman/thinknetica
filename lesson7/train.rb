@@ -13,6 +13,7 @@ require 'pry'
 class Train
   include Manufacturer
   include InstanceCounter
+  include Enumerable
 
   @@trains = {}
 
@@ -58,9 +59,13 @@ class Train
     @wagons.delete(wagon)
   end
 
+  def wagons_each(&block)
+    @wagons.each_with_index(&block)
+  end
+
   def set_route(route)
     @route = route
-    @current_station = route.stations.first
+    @current_station = @route.stations.first
   end
 
   def go_next_station
@@ -70,14 +75,16 @@ class Train
   end
 
   def go_prev_station
+    @current_station.trains.delete(self)
     @current_station = @route.stations[current_station_index - 1]
+    @current_station.add_train(self)
   end
 
   def show_prev_station
     @route.stations[current_station_index - 1]
   end
 
-  def show_nex_station
+  def show_next_station
     @route.stations[current_station_index + 1]
   end
 
@@ -91,6 +98,3 @@ class Train
     @@trains[number]
   end
 end
-
-# p "dont upcount instances of base class"
-# p Train.count_instances

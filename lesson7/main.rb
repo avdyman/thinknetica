@@ -34,6 +34,7 @@ class Main
       p '9 - delete wagons of train'
       p '10 - move the train forward and backward'
       p '11 - list trains on stations'
+      p '12 - wagon loading'
       p 'stop'
 
       choise = gets.chomp.to_s
@@ -53,6 +54,10 @@ class Main
 
   def display_train_list
     @train_list
+  end
+
+  def display_wagon_list
+    @wagon_list
   end
 
   def set_choise(choise)
@@ -81,19 +86,22 @@ class Main
       move_the_train
     when '11'
       list_trains_on_stations
+    when '12'
+      wagon_loading
     end
   end
 
   def create_station
     p 'Name of the created station?'
-    station_name = gets.chomp.to_s
-    new_station = Station.new(name: station_name)
-    p "New station #{station_name} was created"
+    name = gets.chomp.to_s
+    new_station = Station.new(name)
+    p "New station #{name} was created"
+    # binding.pry
     @station_list << new_station
   end
 
   def station_list
-    p @station_list.map(&:name)
+    @station_list.filter { |station| p station.name.to_s }
   end
 
   def create_train
@@ -105,11 +113,11 @@ class Main
       train_type = gets.chomp.to_i
       case train_type
       when 1
-        @train_list << PassengerTrain.new(number: number)
-        p "New #{@train_list.last.number[:number]} #{@train_list.last.class.name} was created"
+        @train_list << PassengerTrain.new(number)
+        p "New #{@train_list.last.number} #{@train_list.last.class.name} was created"
       when 2
-        @train_list << CargoTrain.new(number: number)
-        p "New #{@train_list.last.number[:number]} #{@train_list.last.class.name} was created"
+        @train_list << CargoTrain.new(number)
+        p "New #{@train_list.last.number} #{@train_list.last.class.name} was created"
       else
         p "Last created train #{@train_list.last}"
         p 'Input: 1 - Passenger, 2 - Cargo, stop to exit'
@@ -131,7 +139,7 @@ class Main
     p 'Input index of finish station'
     finish_station = @station_list[gets.chomp.to_i]
     @route_list << Route.new(name_route, first_station, finish_station)
-    p "New route #{name_route} was created"
+    p "New route #{name_route} was created. Stations #{@route_list.last.all_stations}"
   end
 
   def add_station_to_route
@@ -158,7 +166,7 @@ class Main
     p 'Choose the route'
     route = @route_list[gets.chomp.to_i]
     train.set_route(route)
-    p "Current train #{train}"
+    p "Current train #{train} route #{route}"
   end
 
   def create_wagons
@@ -166,11 +174,15 @@ class Main
     wagon_type = gets.chomp.to_i
     case wagon_type
     when 1
-      @wagon_list << PassengerWagon.new
-      p "New wagon #{@wagon_list} was created"
+      p 'Places count?'
+      places_count = gets.chomp.to_i
+      @wagon_list << PassengerWagon.new(places_count)
+      p "New wagon: #{@wagon_list.last.class.name} with places count:#{@wagon_list.last.capacity} was created"
     when 2
-      @wagon_list << CargoWagon.new
-      p "New wagon #{@wagon_list} was created"
+      p 'Wagon volume?'
+      wagon_volume = gets.chomp.to_i
+      @wagon_list << CargoWagon.new(wagon_volume)
+      p "New wagon: #{@wagon_list.last.class.name} with wagon volume:#{@wagon_list.last.capacity} was created"
     else
       p 'Input: 1 - Passenger, 2 - Cargo or stop to exit'
     end
@@ -178,23 +190,25 @@ class Main
 
   def add_wagons_to_train
     p 'Choose the index of train'
-    display_train_list
+    p display_train_list
     train = @train_list[gets.chomp.to_i]
-    p @wagon_list
     p 'Choose the wagon'
+    p display_wagon_list
     wagon = @wagon_list[gets.chomp.to_i]
     train.add_wagon(wagon)
+    train.wagons_each { |wagon, id| p "#{wagon} ID #{id}" }
     @wagon_list.delete(wagon) if @wagon_list.include?(wagon)
-    p "Train Composition #{train}"
   end
 
   def delete_wagons_of_train
     p 'Choose the index of train'
     display_train_list
     train = @train_list[gets.chomp.to_i]
-    p 'Choose the wagon'
-    wagon_index = @train_list.last.wagons[gets.chomp.to_i]
-    @train_list.last.wagons.delete(wagon_index)
+    p "Choose the wagon: #{train.wagons}"
+    wagon = train.wagons[gets.chomp.to_i]
+    train.wagons.delete(wagon)
+    train.wagons_each { |wagon, id| p "#{wagon} ID #{id}" }
+    @wagon_list << wagon unless @wagon_list.include?(wagon)
   end
 
   def move_the_train
@@ -213,8 +227,30 @@ class Main
   end
 
   def list_trains_on_stations
-    p 'Station and trains'
-    @station_list.filter { |station| puts "#{station.name} #{station.show_trains}" }
+    p 'Choose the index of station'
+    display_station_list
+    station_index = @station_list[gets.chomp.to_i]
+    station_index.trains_each { |train, _id| p "At station: #{station_index.name} trains: #{train.number}" }
+  end
+
+  def wagon_loading
+    p 'Choose the number of train'
+    display_train_list
+    train = @train_list[gets.chomp.to_i]
+    p train.wagons
+    p 'Choose the wagon'
+    wagon_index = train.wagons[gets.chomp.to_i]
+    if wagon_index.instance_of?(PassengerWagon)
+      p 'Choose the place'
+      place = gets.chomp.to_i
+      wagon_index.loaded_wagon(place)
+    elsif wagon_index.instance_of?(CargoWagon)
+      p 'Choose the volume'
+      volume = gets.chomp.to_i
+      wagon_index.loaded_wagon(volume)
+    else
+      p 'Unknown wagon'
+    end
   end
 end
 

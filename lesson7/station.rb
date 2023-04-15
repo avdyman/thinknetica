@@ -34,7 +34,7 @@ class Station
     return unless @trains.include?(train)
 
     @trains.delete(train)
-    train.go_next_station
+    # train.go_next_station
   end
 
   def show_trains(type = nil)
@@ -43,6 +43,10 @@ class Station
     else
       @trains.map(&:number)
     end
+  end
+
+  def trains_each(&block)
+    @trains.each_with_index(&block)
   end
 
   def valid?
@@ -58,7 +62,3 @@ class Station
     raise ArgumentError, 'Uncorrect format name' if name !~ STATION_NAME
   end
 end
-
-# p st1 = Station.new("4arGo")
-# p st1.valid?
-# p st2 = Station.new("FarGo5")
