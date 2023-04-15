@@ -2,14 +2,12 @@
 
 require 'pry'
 require_relative 'instance_counter'
-
+# This is main class
 class Station
   include InstanceCounter
   attr_reader :name, :trains
 
-  STATION_NAME = /^[a-z\d]{5}$/i.freeze
-
-  @@stations = []
+  # STATION_NAME = /^[a-z\d]{5}$/i.freeze
 
   class << self
     def all
@@ -20,7 +18,7 @@ class Station
   def initialize(name, trains = [])
     @name = name
     @trains = trains
-    @@stations << self
+    @stations = []
     validate!
 
     register_instance
@@ -34,7 +32,6 @@ class Station
     return unless @trains.include?(train)
 
     @trains.delete(train)
-    # train.go_next_station
   end
 
   def show_trains(type = nil)

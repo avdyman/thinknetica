@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
-
+# This is main class
 class Route
   include InstanceCounter
   attr_reader :name, :stations
 
-  ROUTE_NAME = /^[a-z\d]{6}$/i.freeze
+  # ROUTE_NAME = /^[a-z\d]{6}$/i.freeze
 
   def initialize(name, first_station, finish_station)
     @name = name

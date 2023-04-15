@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'manufacturer'
-
+# This is main class
 class Wagon
   include Manufacturer
 

@@ -9,13 +9,11 @@ require_relative 'manufacturer'
 require_relative 'instance_counter'
 
 require 'pry'
-
+# This is main class
 class Train
   include Manufacturer
   include InstanceCounter
   include Enumerable
-
-  @@trains = {}
 
   attr_reader :number, :speed, :wagons, :current_station
 
@@ -25,7 +23,7 @@ class Train
     @route = nil
     @current_station = nil
     @wagons = []
-    @@trains[number] = self
+    @trains = []
 
     register_instance
   end
@@ -63,7 +61,7 @@ class Train
     @wagons.each_with_index(&block)
   end
 
-  def set_route(route)
+  def add_route(route)
     @route = route
     @current_station = @route.stations.first
   end
@@ -88,13 +86,13 @@ class Train
     @route.stations[current_station_index + 1]
   end
 
+  def self.find(number)
+    @@trains[number]
+  end
+
   private
 
   def current_station_index
     @route.stations.index(@current_station)
-  end
-
-  def self.find(number)
-    @@trains[number]
   end
 end

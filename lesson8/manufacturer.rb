@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
+# This is module
 module Manufacturer
-  def set_manufacturer(name_company)
+  def manufacturing(name_company)
     @company = name_company
   end
 
-  def get_manufacturer
+  def manufactured
     @company
   end
 end

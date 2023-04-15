@@ -4,7 +4,7 @@ require_relative 'train'
 # require_relative 'station'
 require_relative 'manufacturer'
 require 'pry'
-
+# This is subclass
 class PassengerTrain < Train
   include Manufacturer
   include InstanceCounter

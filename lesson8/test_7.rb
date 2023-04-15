@@ -16,6 +16,7 @@ pw1 = PassengerWagon.new(46)
 pw2 = PassengerWagon.new(52)
 pw3 = PassengerWagon.new(64)
 pw4 = PassengerWagon.new(72)
+pw7 = PassengerWagon.new(82)
 pw5 = CargoWagon.new(100)
 pw6 = CargoWagon.new(200)
 t1.add_wagon(pw1)
@@ -53,7 +54,7 @@ pw6.loaded_wagon(8)
 pw6.loaded_wagon(32)
 pw6.loaded_wagon(7)
 p "Wagon #{pw6} wagon_volume: #{pw6.capacity} occupied volume: #{pw6.occupied_places} free volume: #{pw6.free_places}"
-st1 = Station.new('PEACE')
+# st1 = Station.new('PEACE')
 st2 = Station.new('NOWAR')
 st3 = Station.new('CHOMP')
 st2.add_train(t1)
@@ -70,3 +71,17 @@ p '_________________________________'
 p "#{t2.class.name} #{t2.number} wagons: #{t2.wagons}"
 p '_________________________________'
 p "#{t3.class.name} #{t3.number} wagons: #{t3.wagons}"
+p '================================='
+t1.speed_up(20)
+p t1.speed
+
+t1.speed_down(30)
+p t1.speed
+
+t1.add_wagon(pw7)
+p t1.wagons
+
+t1.speed_down(10)
+p t1.speed
+t1.add_wagon(pw7)
+p t1.wagons

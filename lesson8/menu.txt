@@ -1,0 +1,19 @@
+
+============= Make a choise ============
+
+0 - Create station
+1 - Stations list
+2 - Create train
+3 - Create route
+4 - Add station to route
+5 - Delete station from route
+6 - Assign route to train
+7 - Create wagons
+8 - Add wagons to train
+9 - Delete wagons of train
+10 - Move the train forward and backward
+11 - List trains on stations
+12 - Wagon loading
+13 - Stop
+
+=========================================
